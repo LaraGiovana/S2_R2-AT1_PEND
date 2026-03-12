@@ -32,8 +32,8 @@
                 <p id="mensagem" class="fw-bold"></p>
 
                 <ul id="listaTarefas" class="list-group mt-3">
-<script>
     
+<script>
     const inputTarefa = document.querySelector('#inputTarefa');
     const btnAdicionar = document.querySelector('#btnAdicionar');
     const listaTarefas = document.querySelector('#listaTarefas');
@@ -43,40 +43,60 @@
         const texto = inputTarefa.value.trim();
 
         if (texto === "") {
-            mensagem.textContent = "Tarefa vazia! Adicione algo";
+            mensagem.textContent = "Tarefa vazia!! Adicione algo";
             mensagem.className = "fw-bold text-danger";
-            return; 
+            return;
         }
 
         const novoItem = document.createElement('li');
         novoItem.className = "list-group-item d-flex justify-content-between align-items-center";
-        
+
+        const containerEsq = document.createElement('div');
+        containerEsq.className = "d-flex align-items-center gap-2";
+
+        // Cria o Checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.className = "form-check-input mt-0";
+
+        //  Cria o Span do texto
         const spanTexto = document.createElement('span');
         spanTexto.textContent = texto;
 
-        // Cria o botão Remover
-        const btnRemover = document.createElement('button');
-        btnRemover.textContent = "Remover";
-        btnRemover.className = "btn btn-danger btn-sm"; 
-
-        // Adiciona o clique ao botão no momento da criação
-        btnRemover.addEventListener('click', () => {
-            novoItem.remove(); 
-            mensagem.textContent = "Tarefa removida!!!";
-            mensagem.className = "fw-bold text-warning";
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                spanTexto.style.textDecoration = "line-through";
+                spanTexto.classList.add('text-muted');
+                mensagem.textContent = "Tarefa concluída com sucesso!!";
+                mensagem.className = "fw-bold text-info";
+            } else {
+                spanTexto.style.textDecoration = "none";
+                spanTexto.classList.remove('text-muted');
+                mensagem.textContent = "Tarefa reaberta.";
+                mensagem.className = "fw-bold text-secondary";
+            }
         });
 
-        novoItem.appendChild(spanTexto);
-        novoItem.appendChild(btnRemover);
+        //  Cria o Botão Remover
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = "Remover";
+        btnRemover.className = "btn btn-outline-danger btn-sm";
+        btnRemover.addEventListener('click', () => novoItem.remove());
 
+        containerEsq.appendChild(checkbox);
+        containerEsq.appendChild(spanTexto);
+        
+        novoItem.appendChild(containerEsq);
+        novoItem.appendChild(btnRemover);
 
         listaTarefas.appendChild(novoItem);
 
-        mensagem.textContent = "Tarefa adicionada!!!";
-        mensagem.className = "fw-bold text-success";
         inputTarefa.value = "";
         inputTarefa.focus();
+        mensagem.textContent = "Tarefa adicionada!";
+        mensagem.className = "fw-bold text-success";
     });
+</script>
 </script>
                 </ul>
 
