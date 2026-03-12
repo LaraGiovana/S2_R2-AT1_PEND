@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Atividade 4</title>
+    <title>Atividade 5</title>
 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -32,34 +32,50 @@
                 <p id="mensagem" class="fw-bold"></p>
 
                 <ul id="listaTarefas" class="list-group mt-3">
-                    <script>
+<script>
     
     const inputTarefa = document.querySelector('#inputTarefa');
     const btnAdicionar = document.querySelector('#btnAdicionar');
-    const mensagem = document.querySelector('#mensagem');
     const listaTarefas = document.querySelector('#listaTarefas');
+    const mensagem = document.querySelector('#mensagem');
 
     btnAdicionar.addEventListener('click', () => {
         const texto = inputTarefa.value.trim();
 
         if (texto === "") {
-            mensagem.textContent = "Tarefa vazia!! Adicione algo";
-            mensagem.className = "fw-bold text-danger"; 
-        } else {
-            const novoItem = document.createElement('li');
-            
-            
-            novoItem.textContent = texto;
-            novoItem.className = "list-group-item"; 
-            
-            listaTarefas.appendChild(novoItem);
-            
-            mensagem.textContent = "Sua tarefa foi adicionada";
-            mensagem.className = "fw-bold text-success"; 
-            
-            inputTarefa.value = "";
-            inputTarefa.focus();
+            mensagem.textContent = "Tarefa vazia! Adicione algo";
+            mensagem.className = "fw-bold text-danger";
+            return; 
         }
+
+        const novoItem = document.createElement('li');
+        novoItem.className = "list-group-item d-flex justify-content-between align-items-center";
+        
+        const spanTexto = document.createElement('span');
+        spanTexto.textContent = texto;
+
+        // Cria o botão Remover
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = "Remover";
+        btnRemover.className = "btn btn-danger btn-sm"; 
+
+        // Adiciona o clique ao botão no momento da criação
+        btnRemover.addEventListener('click', () => {
+            novoItem.remove(); 
+            mensagem.textContent = "Tarefa removida!!!";
+            mensagem.className = "fw-bold text-warning";
+        });
+
+        novoItem.appendChild(spanTexto);
+        novoItem.appendChild(btnRemover);
+
+
+        listaTarefas.appendChild(novoItem);
+
+        mensagem.textContent = "Tarefa adicionada!!!";
+        mensagem.className = "fw-bold text-success";
+        inputTarefa.value = "";
+        inputTarefa.focus();
     });
 </script>
                 </ul>
