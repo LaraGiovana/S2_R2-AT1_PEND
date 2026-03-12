@@ -2,70 +2,72 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atividade 3</title>
+    <title>Atividade 4</title>
+
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #f0f2f5;
-            padding-top: 50px;
-        }
-        .container {
-            max-width: 500px;
-        }
-        #minhaLista:empty::before {
-            content: "Nenhum foi adicionado";
-            color: #adb5bd;
-            font-style: italic;
-        }
-    </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <div class="container">
-        <div class="card shadow border-0 p-4">
-            <h3 class="text-center mb-4">Lista Dinâmica</h3>
+    <main class="container mt-5">
+        <h1 class="text-center mb-4">Lista de Tarefas</h1>
 
-            <div class="input-group mb-3">
-                <input type="text" id="itemInput" class="form-control" placeholder="Coloque um novo item">
-                <button id="btnAdicionar" class="btn btn-success" type="button">Adicionar</button>
-            </div>
+        <div class="card">
+            <div class="card-body">
 
-            <hr>
+                <div class="mb-3">
+                    <label class="form-label">Nova tarefa</label>
+                    <input 
+                      type="text" 
+                      id="inputTarefa" 
+                      class="form-control"
+                      placeholder="Digite a tarefa">
+                </div>
 
-            <ul id="minhaLista" class="list-group">
+                <button id="btnAdicionar" class="btn btn-primary">
+                    Adicionar
+                </button>
+
+                <hr>
+
+                <p id="mensagem" class="fw-bold"></p>
+
+                <ul id="listaTarefas" class="list-group mt-3">
+                    <script>
+    
+    const inputTarefa = document.querySelector('#inputTarefa');
+    const btnAdicionar = document.querySelector('#btnAdicionar');
+    const mensagem = document.querySelector('#mensagem');
+    const listaTarefas = document.querySelector('#listaTarefas');
+
+    btnAdicionar.addEventListener('click', () => {
+        const texto = inputTarefa.value.trim();
+
+        if (texto === "") {
+            mensagem.textContent = "Tarefa vazia!! Adicione algo";
+            mensagem.className = "fw-bold text-danger"; 
+        } else {
+            const novoItem = document.createElement('li');
+            
+            
+            novoItem.textContent = texto;
+            novoItem.className = "list-group-item"; 
+            
+            listaTarefas.appendChild(novoItem);
+            
+            mensagem.textContent = "Sua tarefa foi adicionada";
+            mensagem.className = "fw-bold text-success"; 
+            
+            inputTarefa.value = "";
+            inputTarefa.focus();
+        }
+    });
+</script>
                 </ul>
+
+            </div>
         </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-    <script>
-        const input = document.querySelector('#itemInput');
-        const botao = document.querySelector('#btnAdicionar');
-        const lista = document.querySelector('#minhaLista');
-
-        botao.addEventListener('click', () => {
-            const valor = input.value.trim();
-
-            if (valor !== "") {
-                const novoItem = document.createElement('li');
-                
-                novoItem.textContent = valor;
-                novoItem.className = "list-group-item d-flex justify-content-between align-items-center animate__animated animate__fadeIn";
-
-                lista.appendChild(novoItem);
-
-                input.value = "";
-                input.focus();
-            } else {
-                alert("Digite alguma coisa antes de adicionar");
-            }
-        });
-
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') botao.click();
-        });
-    </script>
-
-</body></html>
+</body>
+</html>
